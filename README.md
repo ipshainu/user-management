@@ -23,6 +23,6 @@
 
 4. Run the migrations:
     ```bash
-    php artisan migrate:fresh
+    php artisan migrate:fresh --seed
     This will migrate the tables and insert some fake datas
     ```
