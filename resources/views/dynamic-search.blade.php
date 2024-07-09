@@ -1,0 +1,49 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Users - Dynamic Search</div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                    @endif
+
+                    <div class="form-group">
+                        <input type="text" id="search" class="form-control" placeholder="Search by Name/Department/Designation">
+                    </div>
+                    <hr />
+                    <div class="row" id="user-list">
+                        @include('user_list', ['users' => $users])
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $('#search').on('keyup', function() {
+            var query = $(this).val();
+            $.ajax({
+                url: '{{ route("users.search") }}',
+                type: 'GET',
+                data: {
+                    query: query
+                },
+                success: function(response) {
+                    $('#user-list').html(response);
+                }
+            });
+        });
+    });
+</script>
+@endsection
